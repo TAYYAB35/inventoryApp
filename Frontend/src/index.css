@@ -1,2 +1,18 @@
-@import "tailwindcss";
 @import url('https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Outfit:wght@100..900&display=swap');
+@import "tailwindcss";
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label {
+    font-family: "Outfit", sans-serif;
+}
+
+.ant-layout-content {
+    margin: 20px !important;
+}

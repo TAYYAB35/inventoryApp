@@ -1,33 +1,48 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { ToastContainer } from 'react-toastify';
+
+import { Layout, theme } from 'antd';
+import Header from './components/Header.jsx';
+import Sidebar from './components/Sidebar.jsx';
+import Footer from './components/Footer.jsx';
+import { Outlet } from 'react-router-dom';
+
+const { Content } = Layout;
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Layout style={{ minHeight: '100vh' }}>
+        <Sidebar />
+        <Layout>
+          <Header />
+          <Content style={{ margin: '0 16px' }}>
+            {/* <Breadcrumb style={{ margin: '16px 0' }}>
+              <Item>User</Item>
+              <Item>Bill</Item>
+            </Breadcrumb> */}
+            <div
+              className='p-6 h-[calc(100vh-173px)] bg-gray-50 !rounded'
+            // style={{
+            //   padding: 24,
+            //   minHeight: 'calc(100vh - 173px)',
+            //   background: colorBgContainer,
+            //   borderRadius: borderRadiusLG,
+            // }}
+            >
+              {<Outlet />}
+            </div>
+          </Content>
+          <Footer />
+        </Layout>
+      </Layout>
+      <ToastContainer />
     </>
   )
 }
