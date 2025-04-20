@@ -34,7 +34,7 @@ const registerUser = asyncHandler(async (req, res) => {
 // @desc    Auth user & get token
 // @route   POST /api/users/login
 // @access  public
-const authUser = asyncHandler(async (req, res) => {
+const login = asyncHandler(async (req, res) => {
 
     const { email, password } = req.body;
 
@@ -181,4 +181,4 @@ const deleteUsers = asyncHandler(async (req, res) => {
     }
 })
 
-export { authUser, registerUser, logoutUser, getUserProfile, updateUserProfile, getUsers, updateUsers, getUserByID, deleteUsers }
+export { login, registerUser, logoutUser, getUserProfile, updateUserProfile, getUsers, updateUsers, getUserByID, deleteUsers }

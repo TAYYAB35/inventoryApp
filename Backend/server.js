@@ -20,6 +20,9 @@ app.use(express.urlencoded({ extended: true })); // For parsing application/x-ww
 // Middleware to parse cookies
 app.use(cookieParser());
 
+app.use('/api/users', userRoute);
+
+
 app.get('/', (req, res) => {
     res.send('api is running ...')
 })

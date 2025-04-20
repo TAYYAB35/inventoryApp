@@ -1,21 +1,14 @@
-import { useState } from 'react'
+import { Outlet, Route, Routes } from 'react-router-dom';
+import { Layout } from 'antd';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import Footer from './components/Footer';
 import { ToastContainer } from 'react-toastify';
-
-import { Layout, theme } from 'antd';
-import Header from './components/Header.jsx';
-import Sidebar from './components/Sidebar.jsx';
-import Footer from './components/Footer.jsx';
-import { Outlet } from 'react-router-dom';
+import { DashboardScreen } from './screens/index';
 
 const { Content } = Layout;
 
-
 function App() {
-
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
-
   return (
     <>
       <Layout style={{ minHeight: '100vh' }}>
@@ -23,28 +16,20 @@ function App() {
         <Layout>
           <Header />
           <Content style={{ margin: '0 16px' }}>
-            {/* <Breadcrumb style={{ margin: '16px 0' }}>
-              <Item>User</Item>
-              <Item>Bill</Item>
-            </Breadcrumb> */}
-            <div
-              className='p-6 h-[calc(100vh-173px)] bg-gray-50 !rounded'
-            // style={{
-            //   padding: 24,
-            //   minHeight: 'calc(100vh - 173px)',
-            //   background: colorBgContainer,
-            //   borderRadius: borderRadiusLG,
-            // }}
-            >
-              {<Outlet />}
+            <div className='p-6 h-full bg-gray-200 rounded-xl'>
+              <Routes>
+                {/* Now define layout routes here */}
+                <Route path="" element={<DashboardScreen />} />
+                <Route path="profile" element={<div>Profile</div>} />
+                {/* Add more here */}
+              </Routes>
             </div>
           </Content>
-          <Footer />
         </Layout>
       </Layout>
       <ToastContainer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
