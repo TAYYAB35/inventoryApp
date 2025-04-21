@@ -14,8 +14,8 @@ function App() {
         <Header />
         <div>
           <Sidebar />
-          <div className="w-full lg:ps-64 ">
-            <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 bg-gray-50 ">
+          <div className="w-full xl:ps-64 ">
+            <div className="p-4 sm:p-0 space-y-4 sm:space-y-6 bg-slate-100 min-h-[calc(100vh-74px)] xl:min-h-[calc(100vh-60px)]">
               <Routes>
                 {/* Now define layout routes here */}
                 <Route path="" element={<DashboardScreen />} />

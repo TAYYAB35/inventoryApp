@@ -24,7 +24,7 @@ const LoginScreen = () => {
                 }
             })
         } catch (error) {
-
+            
         }
     }
 
