@@ -124,7 +124,7 @@ const Sidebar = () => {
                                 {
                                     items && items.map(item => (
 
-                                        <li>
+                                        <li key={item.id}>
                                             <a key={item.id} onClick={() => handleNavigation(item.link)} className={`flex hover:bg-gray-50 cursor-pointer items-center gap-x-3.5 py-2 px-2.5 text-sm rounded-lg focus:outline-hidden 
                                                 ${location.pathname === item.link ? 'bg-gray-100 text-gray-800 hover:bg-gray-200 ' : ''}`} >
                                                 {item.icon}
