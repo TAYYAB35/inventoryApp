@@ -6,11 +6,12 @@ const useUserStore = create(
   persist(
     (set) => ({
       userInfo: null,
-      setUserInfo: (data) => set({ userInfo: data }),
-      clearUserInfo: () => set({ userInfo: null }),
+      setUser: (data) => set({ userInfo: data }),
+      logout: () => set({ userInfo: null }),
     }),
     {
       name: 'user-info', // key in localStorage
+      getStorage: () => localStorage,
     }
   )
 )
