@@ -2,6 +2,7 @@ import express from 'express';
 import connectDB from './config/db.js';
 import { errorHandler, notFound } from './middlewear/errorMiddlewear.js';
 import userRoute from './routes/userRoutes.js';
+import uploadRoute from './routes/uploadRoutes.js';
 
 
 import dotenv from 'dotenv';
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true })); // For parsing application/x-ww
 app.use(cookieParser());
 
 app.use('/api/users', userRoute);
+app.use('/api/upload', uploadRoute);
 
 
 app.get('/', (req, res) => {

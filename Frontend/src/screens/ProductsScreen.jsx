@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Table from '../components/Table.jsx';
 import { Button, Modal } from 'antd';
-import InputComponent from './../components/Input.jsx'
+import InputComponent from './../components/Input.jsx';
+import useUpload from '../api/useUpload.js'
 
 const ProductsScreen = () => {
 
@@ -10,12 +11,17 @@ const ProductsScreen = () => {
   const [modalText, setModalText] = useState('Content of the modal');
 
 
-  const [img, setImg] = useState('');
+  const [image, setImage] = useState('');
+  const [imagePreview, setImagePreview] = useState(null);
+
   const [name, setName] = useState('Dummy');
   const [price, setPrice] = useState('500');
   const [description, setDescription] = useState('Dummy Desc');
   const [qty, setQty] = useState(5);
   const [minStock, setMinStock] = useState(10);
+
+  const { mutate, isPending, error, data } = useUpload()
+
 
   const handleOk = () => {
     setModalText('The modal will be closed after two seconds');
@@ -34,6 +40,24 @@ const ProductsScreen = () => {
   const showModal = () => {
     setOpen(true);
   };
+
+  const handleChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setImage(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // mutate(image)
+    console.log(image, name, price, description, qty, minStock);
+
+  };
+
+
 
   return (
     <div>
@@ -83,48 +107,56 @@ const ProductsScreen = () => {
           xxl: '40%',
         }}
       >
-        <div className=' grid grid-cols-1 lg:grid-cols-2 gap-5 space-y-2' >
+        <form onSubmit={handleSubmit} className='grid grid-cols-1 lg:grid-cols-2 gap-5 space-y-2' >
 
-          <div className="relative my-6 col-span-2">
-            <input
-              id="id-dropzone02"
-              name="file-upload"
-              type="file"
-              className="peer hidden"
-              accept=".gif,.jpg,.png,.jpeg"
-              multiple
-            />
-            <label
-              for="id-dropzone02"
-              className="flex cursor-pointer flex-col items-center gap-6 rounded border border-dashed border-slate-300 px-6 py-10 text-center"
-            >
-              <span className="inline-flex h-12 items-center justify-center self-center rounded bg-slate-100/70 px-3 text-slate-400">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-label="File input icon"
-                  role="graphics-symbol"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="h-6 w-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-                  />
-                </svg>
-              </span>
-              <p className="flex flex-col items-center justify-center gap-1 text-sm">
-                <span className="text-stone-500 hover:text-stone-500">
-                  Upload media
-                  <span className="text-slate-500"> or drag and drop </span>
+          {!imagePreview &&
+            <div className="relative my-6 col-span-2">
+              <input
+                id="id-dropzone02"
+                name="file-upload"
+                type="file"
+                className="peer hidden"
+                accept=".gif,.jpg,.png,.jpeg"
+                onChange={handleChange}
+              />
+              <label
+                htmlFor="id-dropzone02"
+                className="flex cursor-pointer flex-col items-center gap-6 rounded border border-dashed border-slate-300 px-6 py-10 text-center"
+              >
+                <span className="inline-flex h-12 items-center justify-center self-center rounded bg-slate-100/70 px-3 text-slate-400">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-label="File input icon"
+                    role="graphics-symbol"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+                    />
+                  </svg>
                 </span>
-                <span className="text-slate-600"> PNG, JPG or GIF up to 10MB </span>
-              </p>
-            </label>
-          </div>
+                <p className="flex flex-col items-center justify-center gap-1 text-sm">
+                  <span className="text-stone-500 hover:text-stone-500">
+                    Upload media
+                    <span className="text-slate-500"> or drag and drop </span>
+                  </span>
+                  <span className="text-slate-600"> PNG, JPG or GIF up to 10MB </span>
+                </p>
+              </label>
+            </div>
+          }
+
+          {imagePreview && (
+            <div className="relative col-span-2">
+              <img src={imagePreview} alt="Uploaded preview" className="w-full h-auto rounded-md" />
+            </div>
+          )}
 
           <InputComponent label='Name' value={name} setValue={setName} placeholder='Enter name' />
 
@@ -135,7 +167,14 @@ const ProductsScreen = () => {
 
           <textarea name="description" id="description" value={description} onChange={(e) => setDescription(e.target.value)} className='col-span-2 p-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-teal-600 focus:bg-white caret-teal-600' rows={3} ></textarea>
 
-        </div>
+          <button
+            type="submit"
+            className="inline-flex col-span-2 items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 border border-transparent rounded-md bg-gradient-to-r from-fuchsia-600 to-blue-600 focus:outline-none hover:opacity-80 focus:opacity-80"
+          >
+            Login
+          </button>
+
+        </form>
 
       </Modal>
 

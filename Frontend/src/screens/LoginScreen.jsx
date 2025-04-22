@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import InputComponent from './../components/Input';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import useLogin from '../hooks/useLogin';
+import useLogin from '../api/useLogin';
 import useUserStore from '../store/userStore';
 
 

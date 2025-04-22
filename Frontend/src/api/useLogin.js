@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 import useUserStore from '../store/userStore'
 
 const loginUser = async ({ email, password }) => {
-  const response = await fetch('/api/users/auth', {
+  const response = await fetch(`${USERS_URL}/auth`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password })
