@@ -4,12 +4,13 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify'
 import { useLoginMutation } from '../slices/userApiSlice';
 import { setCredentials } from '../slices/authSlice';
+import { useSelector } from 'react-redux';
 
 const LoginScreen = () => {
 
-    const userInfo = useUserStore(state => state.userInfo)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { userInfo } = useSelector((state) => state.auth)
 
     const [login, { isLoading }] = useLoginMutation();
 
@@ -23,8 +24,7 @@ const LoginScreen = () => {
             // set user info in state and local storage
             dispatch(setCredentials(res));
             toast.success('Login Success');
-            console.log(redirect, 'redirect');
-            navigate(redirect);
+            navigate('/');
         } catch (error) {
             toast.error(error?.data?.message || error?.error);
         }
