@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Table from '../components/Table.jsx';
 import { Button, Modal } from 'antd';
 import InputComponent from './../components/Input.jsx';
-import useUpload from '../api/useUpload.js'
 
 const ProductsScreen = () => {
 
@@ -20,7 +19,6 @@ const ProductsScreen = () => {
   const [qty, setQty] = useState(5);
   const [minStock, setMinStock] = useState(10);
 
-  const { mutate, isPending, error, data } = useUpload()
 
 
   const handleOk = () => {

@@ -10,7 +10,6 @@ import {
 import './index.css'
 import App from './App.jsx'
 import { LoginScreen } from './screens/index.js'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import GuestRoute from './components/GuestRoute.jsx'
 
@@ -43,10 +42,6 @@ const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-
       <RouterProvider router={router} />
-    </QueryClientProvider>
-
   </StrictMode>
 )

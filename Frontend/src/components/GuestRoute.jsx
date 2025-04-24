@@ -1,9 +1,10 @@
 import { Navigate } from 'react-router-dom'
-import useUserStore from '../store/userStore'
+import { useSelector } from 'react-redux'
 
 const GuestRoute = ({ children }) => {
-    const user = useUserStore((state) => state.userInfo)
-    return user ? <Navigate to="/" replace /> : children
+      const {userInfo} = useSelector((state) => state.auth)
+    
+    return userInfo ? <Navigate to="/" replace /> : children
 }
 
 export default GuestRoute

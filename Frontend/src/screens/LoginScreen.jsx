@@ -1,32 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import InputComponent from './../components/Input';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import useLogin from '../api/useLogin';
-import useUserStore from '../store/userStore';
-
+import { toast } from 'react-toastify'
+import { useLoginMutation } from '../slices/userApiSlice';
+import { setCredentials } from '../slices/authSlice';
 
 const LoginScreen = () => {
 
     const userInfo = useUserStore(state => state.userInfo)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { mutate: loginUser, isLoading, isError, error } = useLogin()
+
+    const [login, { isLoading }] = useLoginMutation();
 
 
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            loginUser({ email, password }, {
-                onSuccess: () => {
-                    navigate('/')
-                }
-            })
+            const res = await login({ email, password }).unwrap();
+            // set user info in state and local storage
+            dispatch(setCredentials(res));
+            toast.success('Login Success');
+            console.log(redirect, 'redirect');
+            navigate(redirect);
         } catch (error) {
-            
+            toast.error(error?.data?.message || error?.error);
         }
-    }
+
+    };
+
 
     return (
         <section className="bg-white h-screen">
@@ -92,7 +96,7 @@ const LoginScreen = () => {
                                 </svg>} placeholder={'Enter your email'} value={email} setValue={setEmail} />
 
                                 {/* Password */}
-                                <InputComponent label={'Password'} type={'assword'} svg={<svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <InputComponent label={'Password'} type={'password'} svg={<svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
