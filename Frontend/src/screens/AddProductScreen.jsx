@@ -90,11 +90,10 @@ const AddProductScreen = () => {
                         Add Products
                     </h2>
                 </div>
-
             </div>
             {/*  End Header */}
 
-            <form onSubmit={submitHandler} className='grid grid-cols-1 lg:grid-cols-2 gap-5 space-y-2 p-10' >
+            <form onSubmit={submitHandler} className='grid grid-cols-1 md:grid-cols-2  gap-5 space-y-2 p-10' >
 
                 {!imagePreview &&
                     <div className="relative my-6 col-span-2 bg-white ">
