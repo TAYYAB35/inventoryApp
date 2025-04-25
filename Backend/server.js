@@ -3,6 +3,8 @@ import connectDB from './config/db.js';
 import { errorHandler, notFound } from './middlewear/errorMiddlewear.js';
 import userRoute from './routes/userRoutes.js';
 import uploadRoute from './routes/uploadRoutes.js';
+import productRoute from './routes/productRoutes.js';
+import path from 'path';
 
 
 import dotenv from 'dotenv';
@@ -23,11 +25,17 @@ app.use(cookieParser());
 
 app.use('/api/users', userRoute);
 app.use('/api/upload', uploadRoute);
+app.use('/api/products', productRoute);
 
+
+const __dirname = path.resolve();
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))// to serve uploaded images
 
 app.get('/', (req, res) => {
     res.send('api is running ...')
 })
+
+
 
 app.use('/api/users', userRoute)
 

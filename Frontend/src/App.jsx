@@ -19,7 +19,7 @@ function App() {
               <Routes>
                 {/* Now define layout routes here */}
                 <Route path="" element={<DashboardScreen />} />
-                <Route path="products" element={<ProductsListScreen />} />
+                <Route path="productlist" element={<ProductsListScreen />} />
                 <Route path="products/add" element={<AddProductScreen />} />
                 <Route path="stock" element={<StockScreen />} />
                 <Route path="orders" element={<OrdersScreen />} />

@@ -6,20 +6,17 @@ export const productApiSlice = apiSlice.injectEndpoints({
         // Use ** query ** for fetching data(read- only).
         // Use ** mutation ** for modifying data(write operations).
         getProducts: builder.query({
-            query: ({ keyword, pageNumber }) => ({
+            query: () => ({
                 url: PRODUCT_URL,
-                params: {
-                    keyword,
-                    pageNumber
-                }
             }),
             providesTags: ['Products'],
             keepUnusedDataFor: 5 // Retain unused data for 5 seconds before removing it from the cache
         }),
         createProduct: builder.mutation({
-            query: () => ({
+            query: (data) => ({
                 url: PRODUCT_URL,
                 method: 'POST',
+                body: data
             }),
             invalidatesTags: ['Products']
         }),

@@ -1,25 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InputComponent from '../components/Input'
 import { useCreateProductMutation, useUploadProductImageMutation } from '../slices/productApiSlice';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 
 const AddProductScreen = () => {
-
 
     const [uploadImage, { isLoading: loadingUpload }] = useUploadProductImageMutation();
 
     const [image, setImage] = useState('');
     const [imagePreview, setImagePreview] = useState(null);
 
+    const navigate = useNavigate();
+
+    //controls
     const [name, setName] = useState('Dummy');
     const [link, setLink] = useState('');
-    const [sku, setSKU] = useState();
     const [brand, setBrand] = useState('Confeet');
-    const [category, setCategory] = useState();
+    const [category, setCategory] = useState('');
     const [price, setPrice] = useState('500');
     const [description, setDescription] = useState('Dummy Desc');
-    const [stock, setStock] = useState(5);
+    const [stock, setStock] = useState(50);
     const [minStock, setMinStock] = useState(10);
 
 
@@ -27,36 +29,40 @@ const AddProductScreen = () => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
-
-        const newSKU = generateSKU()
-        setSKU(newSKU)
-
-        const creatProduct = {
+    
+        // Basic check to ensure required fields are present before submitting
+        if (!name || !image || !category) {
+            toast.error('Please fill out all required fields: name, image, and category');
+            return;
+        }
+    
+        const newProduct = {
             name,
             image,
             description,
             brand,
-            SKU: newSKU,
             category,
             link,
             price,
             stock,
             minStock,
+        };
+    
+        try {
+            const res = await createProduct(newProduct);
+    
+            if (res.error) {
+                toast.error(res.error.data.message);
+            } else {
+                toast.success('Product created successfully');
+                navigate('/productlist');
+            }
+        } catch (err) {
+            toast.error('Something went wrong while creating the product');
+            console.error(err);
         }
-        const res = await createProduct(creatProduct);
-        if (res.error) {
-            toast.error(res.error.data.message);
-        } else {
-            toast.success('Product updated successfully');
-            navigate('/admin/productlist');
-        }
-
-    }
-
-    function generateSKU(prefix = 'sku', length = 7) {
-        const randomNumber = Math.floor(Math.random() * Math.pow(10, length)).toString().padStart(length, '0');
-        return `${prefix}${randomNumber}`;
-    }
+    };
+    
 
     const uploadFileHandler = async (e) => {
         const file = e.target.files[0];
@@ -146,9 +152,8 @@ const AddProductScreen = () => {
                 <InputComponent label='Name' value={name} setValue={setName} placeholder='Enter name' />
 
                 <InputComponent label='Price' value={price} setValue={setPrice} placeholder='Enter price' />
-                <InputComponent label='SKU' value={sku} setValue={setSKU} placeholder='Enter sku' disable={true} />
 
-                <InputComponent label='Stock' value={stock} setValue={setStock} placeholder='Enter quantity' />
+                <InputComponent label='Stock' value={stock} type='number' setValue={setStock} placeholder='Enter quantity' />
                 <InputComponent label='Min Stock' value={minStock} setValue={setMinStock} placeholder='Enter min stock alert quantity' />
                 <InputComponent label='Link' value={link} setValue={setLink} placeholder='Enter product live link' />
                 <InputComponent label='Brand' value={brand} setValue={setBrand} placeholder='Enter brand name' />
