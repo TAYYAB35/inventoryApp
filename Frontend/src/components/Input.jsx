@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const InputComponent = ({ label = 'Enter something interesting', value, setValue, svg = '', type = 'text', placeholder = 'Enter something interesting', changeType = false, newType = 'text' }) => {
+const InputComponent = ({ label = 'Enter something interesting', value, setValue, svg = '', type = 'text', placeholder = 'Enter something interesting',disable = false, changeType = false, newType = 'text' }) => {
     const [modifiedLable, SetmodifiedLable] = useState('demmy')
     const id = label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
@@ -20,6 +20,7 @@ const InputComponent = ({ label = 'Enter something interesting', value, setValue
                         type={changeType ? newType : type}
                         name={id}
                         id={id}
+                        disabled={disable}
                         value={value}
                         onChange={(e) => setValue(e.target.value)}
                         placeholder={placeholder}

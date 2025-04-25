@@ -11,28 +11,42 @@ const productSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: true,
     },
     brand: {
         type: String
     },
+    SKU: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     category: {
         type: String,
         required: true,
+    },
+    link: {
+        type: String,
     },
     price: {
         type: Number,
         required: true,
         default: 0.0,
     },
-    countInStock: {
+    Stock: {
         type: Number,
         required: true,
         default: 0,
+        validate: {
+            validator: function (value) {
+                // `this` refers to the current document
+                return value >= this.minStock;
+            },
+            message: props => `Stock (${props.value}) should not be less than minStock.`,
+        },
     },
-    reorderLevel: {
+    minStock: {
         type: Number,
-        default: 0,
+        default: 10,
     },
     status: {
         type: String,

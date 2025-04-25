@@ -1,6 +1,7 @@
 export { default as LoginScreen } from "./LoginScreen";
 export { default as DashboardScreen } from "./DashboardScreen";
-export { default as ProductsScreen } from "./ProductsScreen";
+export { default as ProductsListScreen } from "./ProductsListScreen";
+export { default as AddProductScreen } from "./AddProductScreen";
 export { default as StockScreen } from "./StockScreen";
 export { default as OrdersScreen } from "./OrdersScreen";
 export { default as ExpensScreen } from "./ExpensScreen";

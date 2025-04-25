@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify'
 import { useLoginMutation } from '../slices/userApiSlice';
 import { setCredentials } from '../slices/authSlice';
-import { useSelector } from 'react-redux';
+import { useSelector , useDispatch } from 'react-redux';
 
 const LoginScreen = () => {
 
@@ -13,7 +13,7 @@ const LoginScreen = () => {
     const { userInfo } = useSelector((state) => state.auth)
 
     const [login, { isLoading }] = useLoginMutation();
-
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
