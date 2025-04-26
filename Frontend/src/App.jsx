@@ -3,7 +3,7 @@ import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import { ToastContainer } from 'react-toastify';
 import { Outlet, Route, Routes } from 'react-router-dom';
-import { DashboardScreen, ProductsListScreen, StockScreen, ReportScreen, SalesScreen, OrdersScreen, ExpensScreen, BudgetScreen,AddProductScreen } from './screens/index';
+import { DashboardScreen, ProductsListScreen,ProductView, StockScreen, ReportScreen, SalesScreen, OrdersScreen, ExpensScreen, BudgetScreen,AddProductScreen } from './screens/index';
 
 const { Content } = Layout;
 
@@ -21,6 +21,8 @@ function App() {
                 <Route path="" element={<DashboardScreen />} />
                 <Route path="productlist" element={<ProductsListScreen />} />
                 <Route path="products/add" element={<AddProductScreen />} />
+                <Route path="products/:id" element={<ProductView />} />
+                <Route path="products/edit/:id" element={<AddProductScreen />} />
                 <Route path="stock" element={<StockScreen />} />
                 <Route path="orders" element={<OrdersScreen />} />
                 <Route path="sales" element={<SalesScreen />} />

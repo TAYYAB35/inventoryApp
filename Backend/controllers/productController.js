@@ -63,13 +63,6 @@ const creatProduct = asyncHandler(async (req, res) => {
         return res.status(400).json({ message: 'SKU generation failed or invalid SKU.' });
     }
 
-
-    // Check if a product with the same SKU already exists
-    const existingProduct = await Product.findOne({ sku });
-    if (existingProduct) {
-        return res.status(400).json({ message: 'Product with this SKU already exists.' });
-    }
-
     const product = new Product({
         name,
         price,

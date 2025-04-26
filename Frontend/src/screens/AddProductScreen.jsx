@@ -30,6 +30,12 @@ const AddProductScreen = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
     
+        // minstock should be less than stock
+        if (minStock > stock) {
+            toast.error('Min stock should be less than stock');
+            return;
+        }
+
         // Basic check to ensure required fields are present before submitting
         if (!name || !image || !category) {
             toast.error('Please fill out all required fields: name, image, and category');
@@ -96,7 +102,7 @@ const AddProductScreen = () => {
             <form onSubmit={submitHandler} className='grid grid-cols-1 md:grid-cols-2  gap-5 space-y-2 p-10' >
 
                 {!imagePreview &&
-                    <div className="relative my-6 col-span-2 bg-white ">
+                    <div className="relative col-span-2 bg-white ">
                         <input
                             id="id-dropzone02"
                             name="file-upload"
@@ -153,7 +159,7 @@ const AddProductScreen = () => {
                 <InputComponent label='Price' value={price} setValue={setPrice} placeholder='Enter price' />
 
                 <InputComponent label='Stock' value={stock} type='number' setValue={setStock} placeholder='Enter quantity' />
-                <InputComponent label='Min Stock' value={minStock} setValue={setMinStock} placeholder='Enter min stock alert quantity' />
+                <InputComponent label='Min Stock' value={minStock} type='number' setValue={setMinStock} placeholder='Enter min stock alert quantity' />
                 <InputComponent label='Link' value={link} setValue={setLink} placeholder='Enter product live link' />
                 <InputComponent label='Brand' value={brand} setValue={setBrand} placeholder='Enter brand name' />
                 <InputComponent label='Category' value={category} setValue={setCategory} placeholder='Enter product live link' />
